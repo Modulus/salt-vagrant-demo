@@ -390,8 +390,8 @@
 #  - roots
 #
 # To use multiple backends list them in the order they are searched:
-#fileserver_backend:
-#  - git
+fileserver_backend:
+  - git
 #  - roots
 #
 # Uncomment the line below if you do not want the file_server to follow
@@ -422,7 +422,7 @@
 #
 # Gitfs can be provided by one of two python modules: GitPython or pygit2. If
 # using pygit2, both libgit2 and git must also be installed.
-#gitfs_provider: gitpython
+gitfs_provider: gitpython
 #
 # When using the git fileserver backend at least one git remote needs to be
 # defined. The user running the salt master will need read access to the repo.
@@ -433,7 +433,22 @@
 # environments.
 # Note:  file:// repos will be treated as a remote, so refs you want used must
 # exist in that repo as *local* refs.
-#gitfs_remotes:
+gitfs_remotes:
+  - https://github.com/Modulus/salt-vagrant-demo.git:
+    - base: master
+    - root: saltstack/salt
+    - mountpoint: salt://
+  - https://github.com/saltstack-formulas/docker-formula.git:
+    - base: master
+    - root: docker
+    - mountpoint: salt://docker
+
+ext_pillar:
+  - git:
+    - orks https://github.com/Modulus/salt-vagrant-demo.git:
+      - env: base
+      - root: saltstack/pillar
+    -
 #  - git://github.com/saltstack/salt-states.git
 #  - file:///var/git/saltmaster
 #
